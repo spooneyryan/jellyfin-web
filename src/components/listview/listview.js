@@ -274,9 +274,9 @@ import ServerConnections from '../ServerConnections';
                 const imageAction = playOnImageClick ? 'link' : action;
 
                 if (imgUrl) {
-                    html += '<div data-action="' + imageAction + '" class="' + imageClass + ' lazy" data-src="' + imgUrl + '" item-icon>';
+                    html += '<div style="display: none" data-action="' + imageAction + '" class="' + imageClass + ' lazy" data-src="' + imgUrl + '" item-icon>';
                 } else {
-                    html += '<div class="' + imageClass + ' cardImageContainer ' + cardBuilder.getDefaultBackgroundClass(item.Name) + '">' + cardBuilder.getDefaultText(item, options);
+                    html += '<div style="display: none" class="' + imageClass + ' cardImageContainer ' + cardBuilder.getDefaultBackgroundClass(item.Name) + '">' + cardBuilder.getDefaultText(item, options);
                 }
 
                 const mediaSourceCount = item.MediaSourceCount || 1;
@@ -369,7 +369,7 @@ import ServerConnections from '../ServerConnections';
 
             if (item.IsFolder) {
                 if (options.artist !== false && item.AlbumArtist && item.Type === 'MusicAlbum') {
-                        textlines.push(item.AlbumArtist);
+                        // textlines.push(item.AlbumArtist);
                 }
             } else {
                 if (options.artist) {

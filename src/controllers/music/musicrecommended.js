@@ -215,7 +215,7 @@ import Dashboard from '../../utils/dashboard';
                 return 6;
 
             default:
-                return 0;
+                return 3;
         }
     }
 
