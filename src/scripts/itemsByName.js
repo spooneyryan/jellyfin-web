@@ -77,9 +77,10 @@ function renderItems(page, item) {
         html += '<div class="' + sectionClass + '" data-type="' + section.type + '">';
         html += '<div class="sectionTitleContainer sectionTitleContainer-cards">';
         html += '<h2 class="sectionTitle sectionTitle-cards">';
+        // sectionHeaderRender
         html += section.name;
         html += '</h2>';
-        html += '<a is="emby-linkbutton" href="#" class="clearLink hide" style="margin-left:1em;vertical-align:middle;"><button is="emby-button" type="button" class="raised more raised-mini noIcon">' + globalize.translate('ButtonMore') + '</button></a>';
+        html += '<a style="display: none" is="emby-linkbutton" href="#" class="clearLink hide" style="margin-left:1em;vertical-align:middle;"><button is="emby-button" type="button" class="raised more raised-mini noIcon">' + globalize.translate('ButtonMore') + '</button></a>';
         html += '</div>';
         html += '<div is="emby-itemscontainer" class="itemsContainer padded-right">';
         html += '</div>';
@@ -194,13 +195,13 @@ function renderSection(item, element, type) {
                 PersonTypes: '',
                 ArtistIds: '',
                 AlbumArtistIds: '',
-                SortOrder: 'Descending',
-                SortBy: 'PremiereDate,ProductionYear,Sortname'
+                SortOrder: 'Ascending',
+                SortBy: 'ProductionYear,PremiereDate,Sortname'
             }, {
                 shape: 'overflowSquare',
                 playFromHere: true,
                 showTitle: true,
-                showYear: true,
+                showYear: false,
                 coverImage: true,
                 centerText: true,
                 overlayPlayButton: true
@@ -262,6 +263,7 @@ function renderSection(item, element, type) {
     }
 }
 
+// artistAlbumGridRender
 function loadItems(element, item, type, query, listOptions) {
     query = getQuery(query, item);
     getItemsFunction(query, item)(query.StartIndex, query.Limit, query.Fields).then(function (result) {
