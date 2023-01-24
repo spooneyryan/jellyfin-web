@@ -1383,11 +1383,11 @@ function renderChildren(page, item) {
                     break;
                 }
             }
-            const discNumbers = result.Items.map(x => x.ParentIndexNumber);
+
             html = listView.getListViewHtml({
                 items: result.Items,
                 smallIcon: true,
-                showIndex: new Set(discNumbers).size > 1 || (discNumbers.length >= 1 && discNumbers[0] > 1),
+                showIndex: false,
                 index: 'disc',
                 showIndexNumberLeft: true,
                 playFromHere: true,
