@@ -286,7 +286,7 @@ function loadItems(element, item, type, query, listOptions) {
         listOptions.items = result.Items;
         const itemsContainer = element.querySelector('.itemsContainer');
 
-        if (type === 'Audio') {
+        if (type === 'Audio' || type === 'MusicAlbum') {
             html = listView.getListViewHtml(listOptions);
             itemsContainer.classList.remove('vertical-wrap');
             itemsContainer.classList.add('vertical-list');
@@ -339,6 +339,7 @@ function addCurrentItemToQuery(query, item) {
     }
 }
 
+// queryForArtistAlbums
 function getQuery(options, item) {
     let query = {
         SortOrder: 'Ascending',
