@@ -487,6 +487,7 @@ import { appRouter } from '../appRouter';
         return null;
     }
 
+    // UpdateNowPlayingBarTag
     function updateNowPlayingInfo(state) {
         const nowPlayingItem = state.NowPlayingItem;
 
@@ -512,6 +513,9 @@ import { appRouter } from '../appRouter';
             }
             nowPlayingTextElement.appendChild(itemText);
             nowPlayingTextElement.appendChild(secondaryText);
+
+            // RQ
+            window.document.title = textLines[0].text;
         }
 
         const imgHeight = 70;

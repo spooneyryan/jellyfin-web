@@ -75,7 +75,7 @@ function renderItems(page, item) {
         }
 
         html += '<div class="' + sectionClass + '" data-type="' + section.type + '">';
-        html += '<div class="sectionTitleContainer sectionTitleContainer-cards">';
+        html += '<div style="display: none" class="sectionTitleContainer sectionTitleContainer-cards">';
         html += '<h2 class="sectionTitle sectionTitle-cards">';
         // sectionHeaderRender
         html += section.name;
@@ -346,7 +346,7 @@ function getQuery(options, item) {
         IncludeItemTypes: '',
         Recursive: true,
         Fields: 'AudioInfo,ParentId,PrimaryImageAspectRatio,BasicSyncInfo',
-        Limit: 100,
+        // Limit: 100,
         StartIndex: 0,
         CollapseBoxSetItems: false
     };

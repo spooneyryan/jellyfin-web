@@ -6,6 +6,7 @@
  */
 
 import escapeHtml from 'escape-html';
+import Events from '../../utils/events.ts';
 import itemHelper from '../itemHelper';
 import mediaInfo from '../mediainfo/mediainfo';
 import indicators from '../indicators/indicators';
@@ -17,6 +18,9 @@ import './listview.scss';
 import '../../elements/emby-ratingbutton/emby-ratingbutton';
 import '../../elements/emby-playstatebutton/emby-playstatebutton';
 import ServerConnections from '../ServerConnections';
+import { playbackManager } from '../playback/playbackmanager';
+
+    let currentPlayer;
 
     function getIndex(item, options) {
         if (options.index === 'disc') {
@@ -186,10 +190,18 @@ import ServerConnections from '../ServerConnections';
 
         const enableContentWrapper = options.enableOverview && !layoutManager.tv;
 
+        let year = 0;
+
         for (let i = 0, length = items.length; i < length; i++) {
             const item = items[i];
 
+            // ItemsRenderedTag
             let html = '';
+
+            if (items[i].ProductionYear != year) {
+                year = items[i].ProductionYear;
+                html += '<h2 class="sectionTitle sectionTitle-cards">' + year + '</h2>';
+            }
 
             if (options.showIndex) {
                 const itemGroupTitle = getIndex(item, options);
@@ -245,6 +257,20 @@ import ServerConnections from '../ServerConnections';
 
             if (enableContentWrapper) {
                 cssClass += ' listItem-withContentWrapper';
+            }
+
+            // const foo = currentPlayer;
+            // const bar = foo.getCurrentPlayer();
+            let currentId = '';
+            if (currentPlayer) {
+                const curItem = playbackManager.currentItem(currentPlayer);
+                if (curItem) {
+                    currentId = curItem.id;
+                }
+            }
+
+            if (item.Id == currentId) {
+                cssClass += ' now-playing';
             }
 
             html += `<${outerTagName} class="${cssClass}"${playlistItemId} data-action="${action}" data-isfolder="${item.IsFolder}" data-id="${item.Id}" data-serverid="${item.ServerId}" data-type="${item.Type}"${mediaTypeData}${collectionTypeData}${channelIdData}${positionTicksData}${collectionIdData}${playlistIdData}>`;
@@ -489,6 +515,55 @@ import ServerConnections from '../ServerConnections';
 
         return outerHtml;
     }
+
+    function onStateChanged(event) {
+        if (event.type === 'init') {
+            // skip non-ready state
+            return;
+        }
+    }
+
+    function releaseCurrentPlayer() {
+        if (currentPlayer) {
+            Events.off(currentPlayer, 'playbackstart', onStateChanged);
+            // Events.off(currentPlayer, 'playbackstop', onPlaybackStopped);
+            // Events.off(currentPlayer, 'unpause', onGeneralEvent);
+            // Events.off(currentPlayer, 'pause', onGeneralEvent);
+            Events.off(currentPlayer, 'statechange', onStateChanged);
+            // Events.off(currentPlayer, 'timeupdate', onGeneralEvent);
+
+            currentPlayer = null;
+
+            // hideMediaControls();
+        }
+    }
+
+    // RQ - This has access to the player, and therefore the track ID
+    function bindToPlayer(player) {
+        releaseCurrentPlayer();
+
+        if (!player) {
+            return;
+        }
+
+        currentPlayer = player;
+
+        const state = playbackManager.getPlayerState(player);
+        // updatePlayerState(player, state, 'init');
+
+        Events.on(player, 'playbackstart', onStateChanged);
+        // Events.on(currentPlayer, 'playbackstop', onPlaybackStopped);
+        // Events.on(currentPlayer, 'unpause', onGeneralEvent);
+        // Events.on(currentPlayer, 'pause', onGeneralEvent);
+        Events.on(player, 'statechange', onStateChanged);
+        // Events.on(currentPlayer, 'timeupdate', onGeneralEvent);
+    }
+
+    Events.on(playbackManager, 'playerchange', function () {
+        bindToPlayer(playbackManager.getCurrentPlayer());
+    });
+
+    bindToPlayer(playbackManager.getCurrentPlayer());
 
 /* eslint-enable indent */
 export default {
