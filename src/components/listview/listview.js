@@ -259,8 +259,6 @@ import { playbackManager } from '../playback/playbackmanager';
                 cssClass += ' listItem-withContentWrapper';
             }
 
-            // const foo = currentPlayer;
-            // const bar = foo.getCurrentPlayer();
             let currentId = '';
             if (currentPlayer) {
                 const curItem = playbackManager.currentItem(currentPlayer);

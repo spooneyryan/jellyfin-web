@@ -2087,8 +2087,8 @@ export default function (view, params) {
 
             Events.on(apiClient, 'message', onWebSocketMessage);
             Events.on(playbackManager, 'playerchange', onPlayerChange);
-            // Events.on(playbackManager, 'playbackstart', onPlaybackstart);
 
+            // TODO: Make it so this can be removed with Events.off
             Events.on(playbackManager, 'playbackstart', function (f, currentPlayer) {
                 // const currentPlayer = data;
                 if (currentElement) {
@@ -2109,7 +2109,6 @@ export default function (view, params) {
             itemShortcuts.off(view.querySelector('.nameContainer'));
             Events.off(apiClient, 'message', onWebSocketMessage);
             Events.off(playbackManager, 'playerchange', onPlayerChange);
-            Events.off(playbackManager, 'playbackstart', onPlaybackstart);
             libraryMenu.setTransparentMenu(false);
         });
         view.addEventListener('viewdestroy', function () {
