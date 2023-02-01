@@ -167,7 +167,7 @@
                     <h2 class="childrenSectionHeader sectionTitle sectionTitle-cards hide">
                         <span id="childrenTitle"></span>
                     </h2>
-                    <div style="border: 1px solid red;" id="childrenContent">
+                    <div id="childrenContent">
                         <div is="emby-itemscontainer" class="childrenItemsContainer itemsContainer padded-right" style="text-align: left;"></div>
                     </div>
                 </div>
@@ -227,7 +227,8 @@
                     </div>
                 </div>
 
-                <div id="similarCollapsible" class="verticalSection detailVerticalSection verticalSection-extrabottompadding hide">
+                <!-- MoreLikeThisTag -->
+                <div style="display: none" id="similarCollapsible" class="verticalSection detailVerticalSection verticalSection-extrabottompadding hide">
                     <h2 class="sectionTitle sectionTitle-cards padded-right">${HeaderMoreLikeThis}</h2>
                     <div is="emby-scroller" class="padded-top-focusscale padded-bottom-focusscale" data-centerfocus="true">
                         <div is="emby-itemscontainer" class="scrollSlider focuscontainer-x itemsContainer similarContent"></div>

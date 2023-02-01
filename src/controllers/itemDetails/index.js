@@ -36,6 +36,8 @@ import ServerConnections from '../../components/ServerConnections';
 import confirm from '../../components/confirm/confirm';
 import { download } from '../../scripts/fileDownloader';
 
+let currentElement;
+
 function autoFocus(container) {
     import('../../components/autoFocuser').then(({ default: autoFocuser }) => {
         autoFocuser.autoFocus(container);
@@ -1377,6 +1379,7 @@ function renderChildren(page, item) {
 
         if (item.Type == 'MusicAlbum') {
             let showArtist = false;
+            // tracksLoopedThrough
             for (const track of result.Items) {
                 if (!isEqual(track.ArtistItems.map(x => x.Id).sort(), track.AlbumArtists.map(x => x.Id).sort())) {
                     showArtist = true;
@@ -1384,6 +1387,7 @@ function renderChildren(page, item) {
                 }
             }
 
+            // getListViewCalledHere
             html = listView.getListViewHtml({
                 items: result.Items,
                 smallIcon: true,
@@ -1704,6 +1708,7 @@ function renderCollectionItems(page, parentItem, types, items) {
 
     const containers = page.querySelectorAll('.collectionItemsContainer');
 
+    // indexPageNotifyRefreshNeeded
     const notifyRefreshNeeded = function () {
         renderChildren(page, parentItem);
     };
@@ -2052,6 +2057,7 @@ export default function (view, params) {
         bindAll(view, '.btnCancelSeriesTimer', 'click', onCancelSeriesTimerClick);
         bindAll(view, '.btnCancelTimer', 'click', onCancelTimerClick);
         bindAll(view, '.btnDownload', 'click', onDownloadClick);
+        // indexPageEventListeners
         view.querySelector('.detailImageContainer').addEventListener('click', onPlayClick);
         view.querySelector('.trackSelections').addEventListener('submit', onTrackSelectionsSubmit);
         view.querySelector('.btnSplitVersions').addEventListener('click', function () {
@@ -2063,6 +2069,7 @@ export default function (view, params) {
             renderAudioSelections(view, self._currentPlaybackMediaSources);
             renderSubtitleSelections(view, self._currentPlaybackMediaSources);
         });
+
         view.addEventListener('viewshow', function (e) {
             const page = this;
 
@@ -2080,6 +2087,21 @@ export default function (view, params) {
 
             Events.on(apiClient, 'message', onWebSocketMessage);
             Events.on(playbackManager, 'playerchange', onPlayerChange);
+            // Events.on(playbackManager, 'playbackstart', onPlaybackstart);
+
+            Events.on(playbackManager, 'playbackstart', function (f, currentPlayer) {
+                // const currentPlayer = data;
+                if (currentElement) {
+                    currentElement.classList.remove('now-playing');
+                }
+                const curItem = playbackManager.currentItem(currentPlayer);
+                // const foobar = data.
+
+                const elementPlaying = '[data-id="' + curItem.Id + '"]';
+                currentElement = view.querySelector(elementPlaying);
+
+                currentElement.classList.add('now-playing');
+            });
 
             itemShortcuts.on(view.querySelector('.nameContainer'));
         });
@@ -2087,6 +2109,7 @@ export default function (view, params) {
             itemShortcuts.off(view.querySelector('.nameContainer'));
             Events.off(apiClient, 'message', onWebSocketMessage);
             Events.off(playbackManager, 'playerchange', onPlayerChange);
+            Events.off(playbackManager, 'playbackstart', onPlaybackstart);
             libraryMenu.setTransparentMenu(false);
         });
         view.addEventListener('viewdestroy', function () {
