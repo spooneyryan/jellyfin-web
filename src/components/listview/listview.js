@@ -195,7 +195,7 @@ import { playbackManager } from '../playback/playbackmanager';
         for (let i = 0, length = items.length; i < length; i++) {
             const item = items[i];
 
-            // ItemsRenderedTag
+            // RQ ItemsRenderedTag
             let html = '';
 
             if (items[i].ProductionYear != year) {
@@ -297,6 +297,7 @@ import { playbackManager } from '../playback/playbackmanager';
 
                 const imageAction = playOnImageClick ? 'link' : action;
 
+                // RQ Change Here
                 if (imgUrl) {
                     html += '<div style="display: none" data-action="' + imageAction + '" class="' + imageClass + ' lazy" data-src="' + imgUrl + '" item-icon>';
                 } else {
@@ -393,6 +394,7 @@ import { playbackManager } from '../playback/playbackmanager';
 
             if (item.IsFolder) {
                 if (options.artist !== false && item.AlbumArtist && item.Type === 'MusicAlbum') {
+                        // RQ Change Here
                         // textlines.push(item.AlbumArtist);
                 }
             } else {
@@ -521,6 +523,7 @@ import { playbackManager } from '../playback/playbackmanager';
         }
     }
 
+    // RQ Changes Here
     function releaseCurrentPlayer() {
         if (currentPlayer) {
             Events.off(currentPlayer, 'playbackstart', onStateChanged);
@@ -536,7 +539,6 @@ import { playbackManager } from '../playback/playbackmanager';
         }
     }
 
-    // RQ - This has access to the player, and therefore the track ID
     function bindToPlayer(player) {
         releaseCurrentPlayer();
 
@@ -546,6 +548,7 @@ import { playbackManager } from '../playback/playbackmanager';
 
         currentPlayer = player;
 
+        // RQ Changes Here
         const state = playbackManager.getPlayerState(player);
         // updatePlayerState(player, state, 'init');
 

@@ -487,7 +487,7 @@ import { appRouter } from '../appRouter';
         return null;
     }
 
-    // UpdateNowPlayingBarTag
+    // RQ UpdateNowPlayingBarTag
     function updateNowPlayingInfo(state) {
         const nowPlayingItem = state.NowPlayingItem;
 

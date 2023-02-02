@@ -77,7 +77,7 @@ function renderItems(page, item) {
         html += '<div class="' + sectionClass + '" data-type="' + section.type + '">';
         html += '<div style="display: none" class="sectionTitleContainer sectionTitleContainer-cards">';
         html += '<h2 class="sectionTitle sectionTitle-cards">';
-        // sectionHeaderRender
+        // RQ sectionHeaderRender
         html += section.name;
         html += '</h2>';
         html += '<a style="display: none" is="emby-linkbutton" href="#" class="clearLink hide" style="margin-left:1em;vertical-align:middle;"><button is="emby-button" type="button" class="raised more raised-mini noIcon">' + globalize.translate('ButtonMore') + '</button></a>';
@@ -263,7 +263,7 @@ function renderSection(item, element, type) {
     }
 }
 
-// artistAlbumGridRender
+// RQ artistAlbumGridRender
 function loadItems(element, item, type, query, listOptions) {
     query = getQuery(query, item);
     getItemsFunction(query, item)(query.StartIndex, query.Limit, query.Fields).then(function (result) {
@@ -339,7 +339,7 @@ function addCurrentItemToQuery(query, item) {
     }
 }
 
-// queryForArtistAlbums
+// RQ queryForArtistAlbums
 function getQuery(options, item) {
     let query = {
         SortOrder: 'Ascending',

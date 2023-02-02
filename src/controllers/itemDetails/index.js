@@ -1379,7 +1379,7 @@ function renderChildren(page, item) {
 
         if (item.Type == 'MusicAlbum') {
             let showArtist = false;
-            // tracksLoopedThrough
+            // RQ tracksLoopedThrough
             for (const track of result.Items) {
                 if (!isEqual(track.ArtistItems.map(x => x.Id).sort(), track.AlbumArtists.map(x => x.Id).sort())) {
                     showArtist = true;
@@ -1387,7 +1387,7 @@ function renderChildren(page, item) {
                 }
             }
 
-            // getListViewCalledHere
+            // RQ getListViewCalledHere
             html = listView.getListViewHtml({
                 items: result.Items,
                 smallIcon: true,
@@ -1708,7 +1708,7 @@ function renderCollectionItems(page, parentItem, types, items) {
 
     const containers = page.querySelectorAll('.collectionItemsContainer');
 
-    // indexPageNotifyRefreshNeeded
+    // RQ indexPageNotifyRefreshNeeded
     const notifyRefreshNeeded = function () {
         renderChildren(page, parentItem);
     };
@@ -2057,7 +2057,7 @@ export default function (view, params) {
         bindAll(view, '.btnCancelSeriesTimer', 'click', onCancelSeriesTimerClick);
         bindAll(view, '.btnCancelTimer', 'click', onCancelTimerClick);
         bindAll(view, '.btnDownload', 'click', onDownloadClick);
-        // indexPageEventListeners
+        // RQ indexPageEventListeners
         view.querySelector('.detailImageContainer').addEventListener('click', onPlayClick);
         view.querySelector('.trackSelections').addEventListener('submit', onTrackSelectionsSubmit);
         view.querySelector('.btnSplitVersions').addEventListener('click', function () {
